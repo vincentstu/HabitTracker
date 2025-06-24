@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #f9fafb;
+  --color-bg-secondary: #1f2937;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #f9fafb;
+
+  --color-accent-primary: #6366f1;
+}
+
+@layer base {
+  :root {
+    @apply font-sans bg-bg-primary text-text-primary;
+  }
+  h1 {
+  }
+  h2 {
+    @apply text-3xl font-bold;
+  }
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+}
+
+@layer components {
+  header {
+    @apply bg-bg-secondary text-text-secondary;
+  }
+
+  .main-container {
+    @apply flex flex-col gap-4 col-span-full p-4 items-center;
+  }
+
+  .habit-container {
+    @apply grid grid-cols-1 lg:col-start-3 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full;
+  }
+
+  .button {
+    @apply rounded-2xl bg-accent-primary
+    text-center text-text-secondary p-3 hover:cursor-pointer max-w-xl w-full hover:bg-blue-500 transition-colors;
+  }
+
+  .button span {
+    @apply font-bold text-3xl;
+  }
+}
