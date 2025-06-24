@@ -13,6 +13,9 @@
   :root {
     @apply font-sans bg-bg-primary text-text-primary;
   }
+  header {
+    @apply w-full p-15;
+  }
   h1 {
   }
   h2 {
@@ -43,5 +46,15 @@
 
   .button span {
     @apply font-bold text-3xl;
+  }
+
+  input[type="text"],
+  select,
+  textarea {
+    @apply w-full p-2 rounded-2xl border border-gray-500 outline-none;
+  }
+
+  .form-li {
+    @apply flex flex-col gap-2;
   }
 }
