@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Only import useNavigate
 
-const AddButton = ({ text }) => {
+const AddButton = ({ text = "add button", nav = "/" }) => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   return (
-    <div className="button" onClick={() => navigate("/new")}>
+    <button className="button" onClick={() => navigate(nav)}>
       <span>{text}</span>
-    </div>
+    </button>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import HabitCard from "../components/HabitCard";
 import AddButton from "../components/AddButton";
 
-const HabitPage = () => {
+const HabitPage = ({ habits }) => {
   return (
     <div className="flex flex-col items-center">
       <header className="">
@@ -17,9 +17,11 @@ const HabitPage = () => {
           </div>
           <div className="habit-container">
             <HabitCard />
-            <HabitCard />
+            {habits.map((habit, index) => (
+              <HabitCard key={index} habitInfo={habit} />
+            ))}
           </div>
-          <AddButton text={"+"} />
+          <AddButton text={"+"} nav={"/new"} />
         </div>
       </main>
       <footer></footer>
