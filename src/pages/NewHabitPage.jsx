@@ -11,6 +11,8 @@ const NewHabitPage = ({ addHabit }) => {
     description: "",
     streak: 0,
     lastCompleted: "Never",
+    checked: false,
+    completionDays: [],
   });
 
   const navigate = useNavigate(); // Initialize useNavigate

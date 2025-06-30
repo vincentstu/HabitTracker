@@ -1,51 +1,65 @@
 import React, { useRef } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const HabitCard = ({
-  habitInfo = {
-    name: "Sample Habit",
-    occurency: "daily",
-    description: "This is a sample habit description.",
-    streak: 0,
-    lastCompleted: "Never",
-  },
-}) => {
-  const [habit, setHabit] = useState(habitInfo);
-
-  const [checked, setChecked] = useState(false);
+const HabitCard = ({ habitId, updateHabit, getHabitById }) => {
+  const habit = getHabitById(habitId);
 
   const prevLastCompleted = useRef(habit.lastCompleted);
 
+  const navigate = useNavigate();
+
   return (
     <div
-      className="border-2 rounded-2xl p-4 cursor-pointer hover:bg-gray-200 transition-colors"
+      className={
+        "border-2 rounded-2xl p-4 cursor-pointer  hover:bg-gray-200 transition-colors" +
+        (habit.checked
+          ? " bg-accent-secondary hover:bg-green-300"
+          : "hover:bg-gray-200 ")
+      }
       onClick={(e) => {
-        if (e.target.id != "edit-btn") {
-          if (!checked) {
-            e.currentTarget.className += " bg-accent-secondary";
-            setHabit({
-              ...habit,
-              streak: habit.streak + 1,
+        if (e.target.id != "more-btn") {
+          if (!getHabitById(habitId).checked) {
+            updateHabit(habitId, {
+              ...getHabitById(habitId),
+              streak: getHabitById(habitId).streak + 1,
               lastCompleted: new Date().toLocaleDateString(),
+              checked: true,
+              completionDays: [
+                ...getHabitById(habitId).completionDays,
+                new Date().toLocaleDateString(),
+              ],
             });
+            prevLastCompleted.current = getHabitById.lastCompleted;
           } else {
-            e.currentTarget.className = e.currentTarget.className.replace(
-              " bg-accent-secondary",
-              ""
-            );
-            setHabit({
-              ...habit,
+            updateHabit(habitId, {
+              ...getHabitById(habitId),
+              streak:
+                getHabitById(habitId).streak > 0
+                  ? getHabitById(habitId).streak - 1
+                  : 0,
               lastCompleted: prevLastCompleted.current,
-              streak: habit.streak > 0 ? habit.streak - 1 : 0,
+              checked: false,
+              completionDays: getHabitById(habitId).completionDays.filter(
+                (day) => day !== new Date().toLocaleDateString()
+              ),
             });
           }
-          setChecked(() => !checked);
         }
       }}
     >
       <div className="flex w-full justify-between items-center">
         <h3 className="text-nowrap">{habit.name}</h3>
-        <p id="edit-btn">edit</p>
+        <button
+          id="more-btn"
+          className="hover:cursor-pointer"
+          onClick={() => {
+            console.log(getHabitById(habitId));
+            navigate(`/${habitId}`);
+          }}
+        >
+          More
+        </button>
       </div>
       <div className="info">
         <ul>
